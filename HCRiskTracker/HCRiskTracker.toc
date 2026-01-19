@@ -1,0 +1,8 @@
+## Interface: 11508
+## Title: HC Risk Tracker
+## Notes: Displays a real-time risk indicator for Hardcore players (environment, buffs, pets, poisons).
+## Author: Fr4nck
+## Version: 1.0
+## SavedVariables: HCRT_DB
+
+HCRiskTracker.lua
