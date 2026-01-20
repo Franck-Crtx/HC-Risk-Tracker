@@ -15,5 +15,5 @@ jobs:
 
       - name: Package and release
         uses: BigWigsMods/packager@v2
-        with:
-          api-token: ${{ secrets.CURSEFORGE_API_TOKEN }}
+        env:
+          CF_API_KEY: ${{ secrets.CURSEFORGE_API_TOKEN }}
