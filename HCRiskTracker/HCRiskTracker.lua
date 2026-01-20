@@ -27,7 +27,7 @@ local LOCALE = GetLocale and GetLocale() or "enUS"
 local IS_FR = (LOCALE == "frFR")
 
 local L = {
-    PREFIX = "[HC Risk Tracker]"
+    PREFIX = "[HC Risk Tracker]",
     RISK_LABEL = IS_FR and "RISQUE" or "RISK",
 
     -- UI
