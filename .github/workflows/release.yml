@@ -5,13 +5,23 @@ on:
     tags:
       - "v*"
 
+permissions:
+  contents: write
+
 jobs:
   release:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      - name: Package and release
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Package and release (CurseForge)
         uses: BigWigsMods/packager@v2
         env:
           CF_API_KEY: ${{ secrets.CURSEFORGE_API_TOKEN }}
+          GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          args: -p "${{ vars.CURSEFORGE_PROJECT_ID }}"
