@@ -1,9 +1,5 @@
 package-as: HCRiskTracker
-
-move-folders:
-  HCRiskTracker: HCRiskTracker
-
 manual-changelog: CHANGELOG.md
-
 ignore:
   - .github
+  - CHANGELOG.md
