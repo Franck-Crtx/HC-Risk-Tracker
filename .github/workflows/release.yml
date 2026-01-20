@@ -29,7 +29,13 @@ jobs:
           CF_API_TOKEN: ${{ secrets.CURSEFORGE_API_TOKEN }}
           CF_PROJECT_ID: ${{ vars.CURSEFORGE_PROJECT_ID }}
         run: |
-          curl -sS -X POST "https://wow.curseforge.com/api/projects/${CF_PROJECT_ID}/upload-file" \
-            -H "X-Api-Token: ${CF_API_TOKEN}" \
-            -F "metadata={\"changelog\":\"Automated release ${{ steps.ver.outputs.version }}\",\"changelogType\":\"markdown\",\"releaseType\":\"release\",\"gameVersions\":[\"1.15.8\"]};type=application/json" \
-            -F "file=@HC_Risk_Tracker-${{ steps.ver.outputs.version }}.zip"
+          curl -sS -X POST "https://api.curseforge.com/v1/mods/${CF_PROJECT_ID}/files" \
+            -H "x-api-key: ${CF_API_TOKEN}" \
+            -H "Accept: application/json" \
+            -F "file=@HC_Risk_Tracker-${{ steps.ver.outputs.version }}.zip" \
+            -F "metadata={
+              \"changelog\": \"Automated release ${{ steps.ver.outputs.version }}\",
+              \"changelogType\": \"markdown\",
+              \"releaseType\": \"release\",
+              \"gameVersions\": [11404]
+            };type=application/json"
