@@ -19,10 +19,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Debug variables (safe)
+      - name: Debug project id (safe)
         run: |
           echo "Tag: $GITHUB_REF_NAME"
-          echo "CURSEFORGE_PROJECT_ID = '${{ vars.CURSEFORGE_PROJECT_ID }}'"
+          echo "CURSEFORGE_PROJECT_ID='${{ vars.CURSEFORGE_PROJECT_ID }}'"
           if [ -z "${{ vars.CURSEFORGE_PROJECT_ID }}" ]; then
             echo "ERROR: CURSEFORGE_PROJECT_ID is empty"
             exit 1
@@ -31,12 +31,12 @@ jobs:
             echo "ERROR: CURSEFORGE_API_TOKEN is empty"
             exit 1
           fi
-          echo "Secret CURSEFORGE_API_TOKEN is present (not displayed)."
+          echo "CURSEFORGE_API_TOKEN is present (not displayed)."
 
-      - name: Package and upload to CurseForge (verbose)
+      - name: Package and upload to CurseForge
         uses: BigWigsMods/packager@v2
         env:
           CF_API_KEY: ${{ secrets.CURSEFORGE_API_TOKEN }}
           GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
         with:
-          args: -v -p "${{ vars.CURSEFORGE_PROJECT_ID }}"
+          args: -p "${{ vars.CURSEFORGE_PROJECT_ID }}"
