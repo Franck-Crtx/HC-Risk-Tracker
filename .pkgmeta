@@ -1,4 +1,8 @@
 package-as: HCRiskTracker
 
-move-folders:
-  HCRiskTracker: HCRiskTracker
+ignore:
+  - .github
+  - CHANGELOG.md
+
+dirs:
+  - HCRiskTracker
