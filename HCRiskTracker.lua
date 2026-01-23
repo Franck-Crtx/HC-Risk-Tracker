@@ -293,24 +293,15 @@ local function PlayerRequiresPoisons()
     return HCRT.REQUIRES_POISONS[HCRT.playerClass] == true
 end
 
-local function HasPoisonOnSlot(slotId)
-    local hasMainHandEnchant, _, _, hasOffHandEnchant = GetWeaponEnchantInfo()
-    if slotId == 17 then
-        return hasOffHandEnchant == true
-    end
-    return hasMainHandEnchant == true
-end
-
 local function HasTwoPoisons()
-    local offhandLink = GetInventoryItemLink("player", 17)
-    local mhOk = HasPoisonOnSlot(16)
-
-    if not offhandLink then
-        return mhOk
+    local hasMainHandEnchant, _, _, hasOffHandEnchant = GetWeaponEnchantInfo()        
+    
+    local hasOffhandWeapon = GetInventoryItemLink("player", 17)
+    if not hasOffhandWeapon then
+        return hasMainHandEnchant
+    else
+        return hasMainHandEnchant and hasOffHandEnchant
     end
-
-    local ohOk = HasPoisonOnSlot(17)
-    return mhOk and ohOk
 end
 
 local function RogueHasPoisonsSkill()
@@ -517,6 +508,20 @@ local function FirstMissingLabel(missing)
     return GetSpellInfo(first) or "Buff"
 end
 
+local function ShouldConsiderPower()
+    local powerType = UnitPowerType("player")
+
+    -- 0 = Mana → OUI
+    -- 3 = Energy → OUI
+    -- 1 = Rage → NON
+    -- 2 = Focus → NON
+    if powerType == 0 or powerType == 3 then
+        return true
+    end
+
+    return false
+end
+
 local function ComputeRisk()
     local hp = UnitHealth("player")
     local hpMax = UnitHealthMax("player")
@@ -540,10 +545,12 @@ local function ComputeRisk()
         risk = risk + 10
     end
 
-    if powerPct < 30 then
-        risk = risk + 25
-    elseif powerPct < 60 then
-        risk = risk + 10
+    if ShouldConsiderPower() then
+        if powerPct < 30 then
+            risk = risk + 25
+        elseif powerPct < 60 then
+            risk = risk + 10
+        end
     end
 
     if inCombat and hpPct < 30 then

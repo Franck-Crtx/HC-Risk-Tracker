@@ -2,7 +2,7 @@
 ## Title: HC Risk Tracker
 ## Notes: Displays a real-time risk indicator for Hardcore players (environment, buffs, pets, poisons).
 ## Author: Fr4nck
-## Version: 1.0
+## Version: 1.0.2
 ## SavedVariables: HCRT_DB
 
 HCRiskTracker.lua
